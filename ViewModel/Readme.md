@@ -20,6 +20,13 @@
 ## 역할
 -   UI 관련 데이터를 저장하고 관리해주는 역할
 
+## [선언](https://readystory.tistory.com/176)
+
+## 종류
+-  일반적인 ViewModel
+-  Android ViewModel
+-  차이: 큰 차이는 없지만 AndroidViewModel은 context나 Activity 객체를 사용할 수 있다
+-  단, 기본적으로 일반적인 ViewModel을 지향하며, Android ViewModel은 메모리 누수를 일으킬 수 있다.
 ##  세팅
 -   ViewModel과 LiveData [lifecycle 라이브러리](https://developer.android.com/jetpack/androidx/releases/lifecycle?hl=ko#declaring_dependencies)를 implementation
 
