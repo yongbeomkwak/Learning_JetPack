@@ -1,4 +1,4 @@
-package com.yongbeom.databinding
+package com.yongbeom.sstdatabinding
 
 import org.junit.Test
 
