@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SSTViewModel">
         <activity
+            android:name=".ViewModelTest"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -18,10 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".LiveDataActivity">
-
-        </activity>
+        <activity android:name=".LiveDataActivity"></activity>
     </application>
 
 </manifest>

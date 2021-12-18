@@ -18,6 +18,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnViewModel.setOnClickListener {
+            val intent:Intent=Intent(this,ViewModelTest::class.java)
+            startActivity(intent)
+        }
 
     }
 }
