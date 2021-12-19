@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.room.Room
 import com.yongbeom.sstviewmodel.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +21,14 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnViewModel.setOnClickListener {
             val intent:Intent=Intent(this,ViewModelTest::class.java)
+            startActivity(intent)
+        }
+        binding.btnRoom.setOnClickListener {
+            val intent:Intent=Intent(this,RoomTest::class.java)
+            startActivity(intent)
+        }
+        binding.btnFinal.setOnClickListener {
+            val intent:Intent=Intent(this,Final::class.java)
             startActivity(intent)
         }
 

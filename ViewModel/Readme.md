@@ -53,3 +53,78 @@
  
 
 단, applicationContext는 액티비티의 생명주기가 아닌 애플리케이션의 생명주기를 가지기 때문에 참조를 해도 괜찮다. 이 경우는 뷰 모델을 만들 때 ViewModel을 상속받는 것이 아니라 **AndroidViewModel**을 상속받으면 된다.
+
+# [Room](https://todaycode.tistory.com/39)
+- Room은 스마트폰 내장 DB에 데이터를 저장하기 위해 사용하는 라이브러리이다.
+- Room은 완전히 새로운 개념은 아니고, SQLite를 활용해서 객체 매핑을 해주는 역할을 한다.
+아무튼 이러한 이유들로 구글에서는 SQLite 대신 Room을 사용할 것을 권장하고 있다.
+
+## 구성
+- Room Database, 
+- Data Access Objects
+- Entities
+  > 한국말로 하면 '개체'인 Entity는 관련이 있는 속성들이 모여 하나의 정보 단위를 이룬 것이다.
+  >   예를 들어 위와 같이 사람의 이름, 나이, 번호라는 속성이 모여서 하나의 정보 단위를 이루면 이것을 Entity라고 한다.
+
+## 세팅
+-   build.gradle(module)
+    -   plugIn 설정
+            
+            plugins {id 'kotlin-kapt'}
+    
+    -   dependency
+            
+            def room_version = "2.4.0" // check latest version from docs
+
+            implementation "androidx.room:room-ktx:$room_version"
+            
+            kapt "androidx.room:room-compiler:$room_version"
+
+##  선언
+### 1.  Entity선언 
+    
+    -   dataClass를 생성한 후 
+        
+            @Entity(tableName="테이블명") 설정
+    -   이후 primaryKey 설정 
+            
+            @PrimaryKey(autoGenerate = true) var id: Int = 0
+
+### 2.DAO(DataAccessObject)
+-   인터페이스와 @Dao 어노테이션 사용
+-   사용 어노테이션 
+    -   @Insert: 테이블에 데이터 삽입
+    -   @Update:테이블의 데이터 수정
+    -   @Delete:테이블의 데이터 삭제
+    -   @Query("해당 sql 문법"): 삽입/수정/삭제 외에 다른 기능
+
+### 3.DataBase
+-   추상클래스 이용 ,RoomDatabase() 상속
+-   @Database 어노테이션으로 데이터베이스임을 표시한다.
+
+        @Database(entities = [User::class], version = 1)
+> 어노테이션 괄호 안을 보면 entities가 있는데 여기에 에서 만든 entity를 넣어주면 된다.
+version은 앱을 업데이트하다가 entity의 구조를 변경해야 하는 일이 생겼을 때 이전 구조와 현재 구조를 구분해주는 역할을 한다. 만약 구조가 바뀌었는데 버전이 같다면 에러가 뜨며 디버깅이 되지 않는다.
+처음 데이터베이스를 생성하는 상황이라면 그냥 1을 넣어주면 된다.
+
+-    데이터베이스 객체를 인스턴스 할 때 [싱글톤](https://tecoble.techcourse.co.kr/post/2020-11-07-singleton/)으로 구현하기를 권장하고 있다.
+-    또한 @Synchronized 와 비동기 [Coroutine](https://wooooooak.github.io/kotlin/2019/08/25/%EC%BD%94%ED%8B%80%EB%A6%B0-%EC%BD%94%EB%A3%A8%ED%8B%B4-%EA%B0%9C%EB%85%90-%EC%9D%B5%ED%9E%88%EA%B8%B0/)을 사용한다
+
+
+
+
+# Extra
+-   build.gradle(module) 에서 변수 사용시 def 이용
+
+        def room_version = "2.3.0"
+
+- build.gradle(project) 에서 변수 선언시 ext{}에 넣어주고 
+- build.gradle(module)쪽에서 사용시 ${}로 불러온다.
+
+
+        ext{
+            room_version="2.4.0"
+        }
+
+
+        kapt "androidx.room:room-compiler:${room_version}"
