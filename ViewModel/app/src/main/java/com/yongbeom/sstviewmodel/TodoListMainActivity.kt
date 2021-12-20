@@ -3,6 +3,8 @@ package com.yongbeom.sstviewmodel
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.findNavController
@@ -11,7 +13,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.recyclerview.widget.RecyclerView
+import com.yongbeom.sstviewmodel.DB.Entities.Todo
 import com.yongbeom.sstviewmodel.databinding.ActivityFinalBinding
+import com.yongbeom.sstviewmodel.databinding.ItemTodoBinding
 
 class Final : AppCompatActivity() {
     private var binding:ActivityFinalBinding? =null
@@ -38,4 +43,6 @@ class Final : AppCompatActivity() {
         binding=null
         return super.isDestroyed()
     }
+
+
 }

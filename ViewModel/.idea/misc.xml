@@ -15,6 +15,7 @@
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.12135416666666667" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.12135416666666667" />
+        <entry key="app/src/main/res/layout/item_todo.xml" value="0.25" />
       </map>
     </option>
   </component>

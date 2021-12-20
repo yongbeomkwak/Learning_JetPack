@@ -16,7 +16,7 @@
         tools:layout_editor_absoluteY="40dp" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/etTodo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
