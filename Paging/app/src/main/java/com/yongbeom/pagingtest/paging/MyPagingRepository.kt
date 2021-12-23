@@ -29,6 +29,9 @@ class MyPagingRepository {
      prefetchDistance:
     이는 현재 load한 것으로부터 얼마나 더 많이 load할 것인지 설정하는 것입니다.
     이 값을 50으로 설정한다면, 이미 접근한 data보다 50개의 item을 더 load 할 것입니다.
+
+
+    enablePlaceholders : 플레이스 홀더 사용 여부
      * */
     // Pager를 이용하여 PagingData로 변환
     fun getPagingData(userId : Int):LiveData<PagingData<Post>> {
@@ -36,7 +39,7 @@ class MyPagingRepository {
         return Pager(
             config = PagingConfig(
                 pageSize = 5,
-                maxSize = 11, // pageSize(5) + 2*prefetchDistance(2*3)
+                maxSize = 20, //  >=pageSize(5) + 2*prefetchDistance(2*3)
                 enablePlaceholders = false
             ,   prefetchDistance = 3
             ),

@@ -54,8 +54,23 @@ userId : 쿼리를 위한 값
     }
 
     // 데이터가 새로고침되거나 첫 로드 후 무효화되었을 때 키를 반환하여 load()로 전달
+    /***
+     * 스와이프 Refresh나 데이터 업데이트 등으로 현재 목록을 대체할 새 데이터를 로드할 때 사용된다.
+    PagingData는 Component에서 설명한 것처럼 새로고침 될 때마다 상응하는 PagingData를 생성해야한다.
+    즉, 수정이 불가능하고 새로운 인스턴스를 만들어야한다.
+    가장 최근에 접근한 인덱스인 anchorPosition으로 주변 데이터를 다시 로드한다.
+     */
     override fun getRefreshKey(state: PagingState<Int, Post>): Int? {
-        TODO("Not yet implemented")
+
+        /**
+         * // We need to get the previous key (or next key if previous is null) of the page
+        // that was closest to the most recently accessed index.
+        // Anchor position is the most recently accessed index
+         * */
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
     }
 
 }
