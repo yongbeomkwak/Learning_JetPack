@@ -1,5 +1,6 @@
 package com.yongbeom.pagingtest.paging
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.yongbeom.pagingtest.api.SimpleApi
@@ -21,8 +22,8 @@ userId : 쿼리를 위한 값
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Post> {
         return try{
-            // 키 값이 없을 경우 기본값을 1로 사용함
-            val position = params.key ?: 1
+            // 키 값이 없을 경우 기본값을 0로 사용함
+            val now = params.key ?: 1
 
             // 데이터를 제공하는 인스턴스의 메소드 사용
             val response = simpleApi.getCustomPost2(
@@ -37,9 +38,11 @@ userId : 쿼리를 위한 값
             prevKey : 이전 값 (위 스크롤 방향)
             nextKey : 다음 값 (아래 스크롤 방향)
              */
+            Log.e("now",now.toString())
             LoadResult.Page(
+
                 data = post!!,
-                prevKey = if (position ==1) null else position - 1,
+                prevKey = if (now ==1) null else now - 1,
                 nextKey = null
             )
         }

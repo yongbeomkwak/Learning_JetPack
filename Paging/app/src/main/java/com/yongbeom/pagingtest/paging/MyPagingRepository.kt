@@ -1,9 +1,13 @@
 package com.yongbeom.pagingtest.paging
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.yongbeom.pagingtest.api.RetrofitInstance
+import com.yongbeom.pagingtest.model.Post
 
 class MyPagingRepository {
 
@@ -21,15 +25,23 @@ class MyPagingRepository {
     페이지를 삭제하여 메모리에 보관되는 항목 수를 제한하는 데 사용할 수 있다.
 
     최소 pageSize + (2 * prefetchDistance) 보다 높게 설정해야 한다.
+
+     prefetchDistance:
+    이는 현재 load한 것으로부터 얼마나 더 많이 load할 것인지 설정하는 것입니다.
+    이 값을 50으로 설정한다면, 이미 접근한 data보다 50개의 item을 더 load 할 것입니다.
      * */
-    fun getPost(userId : Int) =
-        Pager(
+    // Pager를 이용하여 PagingData로 변환
+    fun getPagingData(userId : Int):LiveData<PagingData<Post>> {
+        Log.e("getPage","GetPagingData")
+        return Pager(
             config = PagingConfig(
                 pageSize = 5,
-                maxSize = 20,
+                maxSize = 11, // pageSize(5) + 2*prefetchDistance(2*3)
                 enablePlaceholders = false
+            ,   prefetchDistance = 3
             ),
             // 사용할 메소드 선언
-            pagingSourceFactory = { MyPagingSource(RetrofitInstance.api,userId)}
+            pagingSourceFactory = { MyPagingSource(RetrofitInstance.api, userId) } //레트로핏 이용 데이터 가져오기
         ).liveData
+    }
 }
