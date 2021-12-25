@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-             val viewModel by viewModels<MainViewModel>()
+             val viewModel by viewModels<MainViewModel>() //뷰 모델 정의
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -41,10 +41,10 @@ class MainActivity : ComponentActivity() {
 }
 
 class MainViewModel : ViewModel() {
-    private val _data = mutableStateOf("Hello")
-    val data:State<String> =_data
+    private val _data = mutableStateOf("Hello") // 데이터는 private
+    val data:State<String> =_data //외부로는 이렇게 제공
 
-    fun changeValue()
+    fun changeValue() //변경 메소드
     {
         _data.value="World"
     }
