@@ -1,122 +1,47 @@
 package com.yongbeom.studycompose
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.yongbeom.studycompose.ui.theme.StudyComposeTheme
-import kotlinx.coroutines.launch
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
-@ExperimentalComposeUiApi
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            var isFavorite by rememberSaveable {
-                //remberSaverable 약간 LiveData 같은 느낌 화면 전환을 해도 값을 기억함
-                // 초기값 false
-                mutableStateOf(false)
-            }
-            val (text,setValue) = remember {
-                //setValue는 함
-                mutableStateOf("")
-            }
-            val scaffoldState = rememberScaffoldState() //스낵 bar를 위해 사용
-            val scope= rememberCoroutineScope() // 스낵바는 코루틴 필요
-            val keyboardController=LocalSoftwareKeyboardController.current //키보드 컨트롤러
-            Scaffold(
-                scaffoldState = scaffoldState //스낵 바를 위한
-            ) {
-                StudyComposeTheme {
-                    // A surface container using the 'background' color from the theme
-                    Surface(color = MaterialTheme.colors.background)
-                    {
-                        ImageCard(
-                            modifier = Modifier
-                                .fillMaxSize(0.5f)
-                                .padding(16.dp),
-                            isFavorite = isFavorite
-                        ) { favorite ->
-                            isFavorite = favorite //갑 변경
-
-                        }
-                        Column(modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally) {
-                            TextField(value = text, onValueChange = setValue)
-                            Button(onClick = {
-                                keyboardController?.hide() //키보드 숨기기
-                                scope.launch {
-                                    scaffoldState.snackbarHostState.showSnackbar("Hello $text")
-                                }
-                            }) {
-                                Text(text = "클릭")
-                            }
-
-                        }
-                    }
-                }
-            }
-
-
-
-        }
-    }
-}
-
-@Composable
-fun ImageCard(
-    modifier: Modifier = Modifier,
-    isFavorite: Boolean,
-    onTabFavorite: (Boolean) -> Unit // 콜백함수 (매개변수 Boolean)
-) {
-    Card(
-        // 카드 뷰
-        modifier = modifier,
-        shape = RoundedCornerShape(8.dp), //둥근 모서리 모양
-        elevation = 5.dp,
-    ) {
-        Box(
-            modifier = Modifier.height(200.dp),
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "필수적으로 작성 해야함",
-                contentScale = ContentScale.Crop,
+            val navController = rememberNavController()
+            NavHost(
+                navController = navController, //컨트롤러 설정
+                startDestination = "first" // 첫 화면
             )
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.TopEnd
-            ) {
-                IconButton(onClick = {
-                    onTabFavorite(!isFavorite) // false -> true , 역전 true -> false
-                }) {
-                    Icon(
-                        imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                        contentDescription = "좋아요",
-                        tint = Color.Blue
+            {
+                composable("first") //composable 함수를 이용하여 route 명과 함께 안에 화면 내용을 작성
+                {
+                    FirstScreen(naviController = navController)
+                }
+                composable("second") //composable 함수를 이용하여 route 명과 함께 안에 화면 내용을 작성
+                {
+                    SecondScreen(naviController = navController)
+                }
+                composable("third/{value}") //third 이동시 key:value를 같이 이동
+                { backStackEntry ->
+                    //backStackEntry 변수로 넘겨주는 변수 접근 가는  .arguments
+                    ThirdScreen(
+                        naviController = navController,
+                        value=backStackEntry.arguments?.getString("value") ?: "" //key value값으로 value를 넘겨줌 단 null 일 경우 공백
                     )
                 }
             }
@@ -124,5 +49,72 @@ fun ImageCard(
     }
 }
 
+@Composable
+fun FirstScreen(naviController: NavController) {
+    val (value, setValue) = remember {
+        mutableStateOf("")
+    }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(text = "첫 번째 화면")
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = {
+            naviController.navigate("second") // 이동
+        }) {
+            Text(text = "두 번째 화면")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        TextField(value = value, onValueChange = setValue)
+        Button(onClick = {
+            if (value.isNotEmpty()) {
+                naviController.navigate("third/$value") //third로  이동과 동시에 value값을 넘김
+            }
+        }) {
+            Text(text = "세 번째 화면")
+        }
+    }
+}
+
+@Composable
+fun SecondScreen(naviController: NavController) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(text = "두 번째 화면")
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = {
+            naviController.navigateUp() //뒤로가기
+        }) {
+
+            Text(text = "뒤로가")
+        }
 
 
+    }
+}
+
+@Composable
+fun ThirdScreen(naviController: NavController, value: String) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(text = "세 번째 화면")
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = value)
+        Button(onClick = {
+            naviController.navigateUp()
+        }) {
+            Text(text = "뒤로가")
+        }
+
+
+    }
+}
