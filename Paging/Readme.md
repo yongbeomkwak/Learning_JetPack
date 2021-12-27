@@ -12,15 +12,16 @@
 -   load 함수와 getRefreshKey 함수를 override
  
 ##  2.Repository 생성
-
+---
 ##  3.데이터 모델 정의하기
--   Enum Data Type class 와 Data Model class 을 정의한다
-
+### -   Enum Data Type class 와 Data Model class 을 정의한다
+---
 ## 4.   ViewModel 정의하기 And ViewModelFactory
-
+----
 ## 5. PagingAdapter & LoadStateAdapter 정의
--   PagingDataAdapter 는 기존 RecyclerView.Adapter의 구현과 동일하다.
--   차이점은 diffUtil을 구현해줘야 하는 것뿐이다.
 
+### -   PagingDataAdapter 는 기존 RecyclerView.Adapter의 구현과 동일하다.
+### -   차이점은 diffUtil을 구현해줘야 하는 것뿐이다.
+---
 
 ## 6. MainActivity(사용)
