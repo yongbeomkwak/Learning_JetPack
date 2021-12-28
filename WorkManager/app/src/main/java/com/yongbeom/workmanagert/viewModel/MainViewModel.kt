@@ -4,8 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
-import com.yongbeom.workmanagert.Worker.MyCoroutineWorker
-import com.yongbeom.workmanagert.Worker.MyWorker
+import com.yongbeom.workmanagert.Worker.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
@@ -30,13 +29,13 @@ class MainViewModel:ViewModel() {
 //            PeriodicCoroutineWorkRequest(15, workManager)
         }
 
-        /*viewModelScope.launch {
+        viewModelScope.launch {
             delay(1000L)
             Log.e("-", "-----------------------------------------------------------------------------")
             ArrayCreatingInputMerger(workManager)
             delay(1000L)
             OverwritingInputMerger(workManager)
-        }*/
+        }
     }
 
     fun OneTimeWorkRequest(workManager: WorkManager) {
@@ -61,5 +60,31 @@ class MainViewModel:ViewModel() {
         /*주기적으로 반복하는 CoroutineWorkRequest*/
         val workRequest = PeriodicWorkRequestBuilder<MyCoroutineWorker>(period, TimeUnit.MINUTES).build()
         workManager.enqueue(workRequest)
+    }
+
+    fun ArrayCreatingInputMerger(workManager: WorkManager) {
+        val diceRollWorker1 = OneTimeWorkRequestBuilder<DiceRollWorker>().build()
+        val diceRollWorker2 = OneTimeWorkRequestBuilder<DiceRollWorker>().build()
+        val diceRollWorker3 = OneTimeWorkRequestBuilder<DiceRollWorker>().build()
+
+        val diceSumWorker = OneTimeWorkRequestBuilder<DiceSumWorker>()
+            .setInputMerger(ArrayCreatingInputMerger::class)
+            .build()
+
+        workManager.beginWith(listOf(diceRollWorker1, diceRollWorker2, diceRollWorker3))
+            .then(diceSumWorker).enqueue()
+    }
+
+    fun OverwritingInputMerger(workManager: WorkManager) {
+        val diceRollWorker1 = OneTimeWorkRequestBuilder<DiceRollWorker>().build()
+        val diceRollWorker2 = OneTimeWorkRequestBuilder<DiceRollWorker>().build()
+        val diceRollWorker3 = OneTimeWorkRequestBuilder<DiceRollWorker>().build()
+
+        val rolledTimeWorker = OneTimeWorkRequestBuilder<DiceRolledTimeWorker>()
+            .setInputMerger(OverwritingInputMerger::class)
+            .build()
+
+        workManager.beginWith(listOf(diceRollWorker1, diceRollWorker2, diceRollWorker3))
+            .then(rolledTimeWorker).enqueue()
     }
 }
