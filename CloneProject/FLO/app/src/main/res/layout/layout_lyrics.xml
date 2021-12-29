@@ -6,33 +6,17 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:gravity="center"
-        android:id="@+id/tv_prev"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Prev"
-        android:textColor="@color/gray"
-        >
-    </TextView>
+
 
     <TextView
         android:gravity="center"
-        android:id="@+id/tv_now"
+        android:id="@+id/tv_lyrics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         android:textColor="@color/white"
         android:text="now">
     </TextView>
 
-    <TextView
-        android:gravity="center"
-        android:id="@+id/tv_next"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="next"
-        android:textColor="@color/gray">
-    </TextView>
+
 
 </LinearLayout>

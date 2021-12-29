@@ -2,5 +2,9 @@
 <resources>
     <dimen name="playBoxPadding">10dp</dimen>
     <dimen name="IconSize">40dp</dimen>
+    <dimen name="seekBarThmub">20dp</dimen>
+    <dimen name="SongTitle">20sp</dimen>
+    <dimen name="Album">15sp</dimen>
+    <dimen name="Img">300dp</dimen>
 
 </resources>

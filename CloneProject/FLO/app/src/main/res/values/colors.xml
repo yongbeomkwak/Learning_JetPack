@@ -9,4 +9,6 @@
     <color name="black">#100E0E</color>
     <color name="gray">#C1BEC2</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="prevlyrics">#3B3B3B</color>
+
 </resources>

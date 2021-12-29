@@ -3,13 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/circle.xml" value="0.2324074074074074" />
         <entry key="app/src/main/res/drawable/ic_baseline_pause_24.xml" value="0.1359375" />
         <entry key="app/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.1359375" />
+        <entry key="app/src/main/res/drawable/icon_circle.xml" value="0.2324074074074074" />
         <entry key="app/src/main/res/drawable/icon_pause.xml" value="0.1787037037037037" />
         <entry key="app/src/main/res/drawable/icon_play.xml" value="0.1787037037037037" />
         <entry key="app/src/main/res/drawable/icon_playlist.xml" value="0.1787037037037037" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.14447463768115942" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.10572916666666667" />
+        <entry key="app/src/main/res/layout/fragment_lyrics.xml" value="0.11979166666666667" />
+        <entry key="app/src/main/res/layout/fragment_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_lyrics.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_play_box.xml" value="0.25" />
       </map>
