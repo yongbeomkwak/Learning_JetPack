@@ -5,6 +5,7 @@
     <dimen name="seekBarThmub">20dp</dimen>
     <dimen name="SongTitle">20sp</dimen>
     <dimen name="Album">15sp</dimen>
-    <dimen name="Img">300dp</dimen>
+    <dimen name="Img">280dp</dimen>
+    <dimen name="Lyrics">10dp</dimen>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.yongbeom.flo.Activity
 
 import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -20,36 +21,57 @@ import com.yongbeom.flo.databinding.ActivityMainBinding
 import com.yongbeom.flo.util.FloApplication
 import com.yongbeom.flo.util.RetrofitService
 import com.yongbeom.flo.util.RetrofitSet
+import com.yongbeom.flo.viewModels.LyricsViewModel
 import com.yongbeom.flo.viewModels.StatusViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     private var mBinding:ActivityMainBinding? =null
     private val binding get() = mBinding
-    private var mediaPlayer:MediaPlayer? =null
     private lateinit var navController: NavController
-    private val statusViewModel:StatusViewModel by viewModels()
+    private var mediaPlayer:MediaPlayer? =null
+    public val statusViewModel:StatusViewModel by viewModels() //Fragment에서 접근할 수 있도록 public
+    public lateinit var lyricsInfo:LyricsViewModel //Fragment에서 접근할 수 있도록 public
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding= ActivityMainBinding.inflate(layoutInflater)
-         val navHostFragment:NavHostFragment =supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment:NavHostFragment =supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController=navHostFragment.navController
+
+        //Fragment를 이동하기 위한 navController
+
         setContentView(binding?.root)
-        initMedia()
+        initMedia() //MediaPlayer 초기화
+
+        mediaPlayer!!.setOnPreparedListener(object :MediaPlayer.OnPreparedListener{
+            //곡을 불러오는 준비 작업 리스
+            override fun onPrepared(mp: MediaPlayer?) {
+                Log.e("Prepare","준비 완료")
+                binding!!.seekBar.max=FloApplication._data.duration// seekBar max값 설정
+            }
+        })
+        CoroutineScope(Dispatchers.IO).launch { //코루틴을 사용해 복잡한 초기화 작업을 거침
+            lyricsInfo=LyricsViewModel()
+        }
+
 
         /**
-          ********************** Observer ******************
+         ********************** Observer ******************
          */
 
         statusViewModel.isPlay.observe(this, Observer {
-
-
             if(it) //재생 중이면  pause 아이콘 보여주기
             {
+
                 binding!!.playBox.imgPlay.setImageResource(R.drawable.icon_pause)
             }
             else //아니면 play 아이콘 보여주기
@@ -59,16 +81,18 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        statusViewModel._isMain.observe(this, Observer {
-            if(!it) //Main 회면이면
+        statusViewModel.isMain.observe(this, Observer {
+            if(it) //Main 회면이면 가사리스트 아이콘 보이게
             {
                 binding!!.playBox.imgPlayList.visibility= View.VISIBLE //보이게
             }
             else
             {
-                binding!!.playBox.imgPlayList.visibility= View.INVISIBLE // 안보이게
-           }
+                binding!!.playBox.imgPlayList.visibility= View.INVISIBLE //보이게
+            }
+
         })
+
 
 
         /**
@@ -78,18 +102,38 @@ class MainActivity : AppCompatActivity() {
 
 
         binding!!.playBox.imgPlay.setOnClickListener{
-            if (mediaPlayer!!.isPlaying)
+            if (mediaPlayer!!.isPlaying) //재생중인 상태에서 재생 버튼을 눌렀을 때
             {
-                mediaPlayer!!.pause()
+                mediaPlayer!!.pause() //멈춤
             }
-            else
+            else //재생중이 아닐 때 눌럿을 경우
             {
-                mediaPlayer!!.start()
+                mediaPlayer!!.start() //재생
+                // Seekbar 트랙킹 하는 영역
+                Thread(object:Runnable{ //이 때 스레드를 하나 만들어 SeekBar를 트래킹함
+                    override fun run() {
+                        while(mediaPlayer!!.isPlaying) //재생동안만 작동
+                        {
+                            try {
+                                Thread.sleep(1000)//1초에 한번씩
+                            }
+                            catch (e:Exception){}
+
+
+
+
+                            binding!!.seekBar.progress=mediaSeekToProgress(mediaPlayer!!.currentPosition) //SeekBar 이동
+                        }
+
+                    }
+                }).start()
             }
-            statusViewModel._isPlay.value=!statusViewModel.isPlay.value!!
+
+            statusViewModel._isPlay.value=!statusViewModel.isPlay.value!! //재생중인지 아닌지 상태 변경 (!반대값으로)
         }
 
         binding!!.playBox.imgPlayList.setOnClickListener{
+            //가사창으로 Fragment이동, MainFragment인지 그 값 역시 변
             statusViewModel._isMain.value=!statusViewModel._isMain.value!!
             navController.navigate(R.id.action_mainFragment_to_lyricsFragment)
         }
@@ -98,16 +142,20 @@ class MainActivity : AppCompatActivity() {
 
             /**
              *    onStartTrackingTouch(SeekBar seekbar) : 최초 탭하여 드래그 시작시 발생
-
-                onStopTrackingTouch(SeekBar seekbar) : 드래그 중 발생
-
-                onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) : 드래그 멈추면 발생
-
+            onStopTrackingTouch(SeekBar seekbar) : 드래그 중 발생
+            onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) : 드래그 멈추면 발생
             -> 시크바 View / 변경된 값 / 사용자에 의한 변경인지(True), 코드에 의한 변경인지(False)
              * */
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-
-                    mediaPlayer!!.seekTo(progressToMediaSeek(progress))
+                //여기서 fromUser를 거치면 외부에서 UI로 컨트롤 한 것이고
+                //그냥 밖에있으면 progress가 지날 때마다 계속 실행됨
+                //진짜 다행이 여기서 해당 값을 liveData하여 MainFragment에서 Observe가능
+                statusViewModel._pos.value=progress //LiveData 변경
+                if(fromUser) //것을 보면 사용자가 SeekBar를 움직였을때만 if가 실행되게 되었습니다
+                {
+                    mediaPlayer!!.seekTo(progressToMediaSeek(progress)) //유저가 움직인 만큼 mediaPlayer도 노래 재생 위치를 변경
+                    //이때 mediaPlayer와 Progress값과 차이가 있으니 해당 함수를 통해 맞춰줌
+                }
 
             }
 
@@ -121,32 +169,37 @@ class MainActivity : AppCompatActivity() {
         })
 
         mediaPlayer!!.setOnCompletionListener {
+            // 곡 종료 시 초기화
             Log.e("Finish","곡 종료")
             Toast.makeText(this,"곡 종료",Toast.LENGTH_SHORT).show()
             binding!!.seekBar.progress=0
             mediaPlayer!!.seekTo(0)
             statusViewModel._isPlay.value=false
-       }
+        }
 
     }
 
     fun initMedia()
     {
-        mediaPlayer=MediaPlayer() //MediaPlayer 인스턴스 얻기
-        mediaPlayer!!.setDataSource(FloApplication._data.file) //해당 url 파일 얻기
-        mediaPlayer!!.prepare() //준비
-        binding!!.seekBar.max=FloApplication._data.duration// seekBar 설정
+        mediaPlayer= MediaPlayer.create(this, Uri.parse(FloApplication._data.file))
+        //해당 Uri를 Uri.parse를 이용
+
 
     }
 
-
+     //값을 Convert
     fun progressToMediaSeek(progress:Int):Int
     {
         return progress*1000
     }
+    fun mediaSeekToProgress(progress:Int):Int
+    {
+        return progress/1000
+    }
 
 
     override fun isDestroyed(): Boolean {
+        //할당 해제
         mBinding=null
         if(mediaPlayer != null) {
             mediaPlayer!!.release();
@@ -155,13 +208,5 @@ class MainActivity : AppCompatActivity() {
         return super.isDestroyed()
     }
 
-    inner class ProgressThread():Thread()
-    {
-        override fun run() {
-            while (statusViewModel.isPlay.value!!)
-            {
-                binding!!.seekBar.progress=mediaPlayer!!.currentPosition
-            }
-        }
-    }
+
 }

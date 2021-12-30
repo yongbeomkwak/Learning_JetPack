@@ -9,6 +9,8 @@ class StatusViewModel:ViewModel() {
     public val isPlay:LiveData<Boolean> = _isPlay
     public val _isMain:MutableLiveData<Boolean> = MutableLiveData(true)
     public val isMain:LiveData<Boolean> = _isMain
+    public val _pos:MutableLiveData<Int> = MutableLiveData(0)
+    public val pos:LiveData<Int> = _pos
 
 
 

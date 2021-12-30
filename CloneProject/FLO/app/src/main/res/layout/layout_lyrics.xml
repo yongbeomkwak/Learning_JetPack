@@ -7,16 +7,37 @@
     android:orientation="vertical">
 
 
+    <TextView
+        android:layout_marginVertical="@dimen/Lyrics"
+        android:gravity="center"
+        android:id="@+id/tv_prevlyrics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray"
+
+
+        >
+    </TextView>
 
     <TextView
+        android:layout_marginVertical="@dimen/Lyrics"
         android:gravity="center"
-        android:id="@+id/tv_lyrics"
+        android:id="@+id/tv_nowlyrics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:text="now">
+        android:textStyle="bold"
+        >
     </TextView>
 
+    <TextView
+        android:gravity="center"
+        android:id="@+id/tv_nextlyrics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray"
+       >
+    </TextView>
 
 
 </LinearLayout>
