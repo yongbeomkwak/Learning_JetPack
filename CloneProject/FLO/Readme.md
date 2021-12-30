@@ -10,3 +10,9 @@
   - MediaPlayer   
     - [볼륨조절](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=ksseo63&logNo=120133161294)
   - SeekBar 컨트롤(Thread 이용)
+
+-   MainFragment.kt
+    -   Fragment에서 Activity 접근 후 observe
+
+-   LyricsViewModel.kt
+    -   다양한 자료형 및 Regex 정규표현식 사용,split까지
