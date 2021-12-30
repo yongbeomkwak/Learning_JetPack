@@ -30,6 +30,7 @@ class MainFragment:Fragment() {
         binding!!.tvAlbum.text=FloApplication._data.album?:"Null"
         binding!!.tvSinger.text=FloApplication._data.singer?:"Null"
         Glide.with(this).load(FloApplication._data.image).into(binding?.imgSong!!)
+        //binding!!.recyLyrics.adapter
         Log.e("OnViewCreated","Lebal")
     }
 }

@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black"
-    tools:context=".Activity.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom"
-        android:layout_marginBottom="0dp"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_main">
+        android:background="@color/black"
+        tools:context=".Activity.MainActivity">
 
-    </androidx.fragment.app.FragmentContainerView>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottom"
+            android:layout_marginBottom="0dp"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_main">
 
-    <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:id="@+id/bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        </androidx.fragment.app.FragmentContainerView>
 
-        <SeekBar
-            android:paddingHorizontal="@dimen/playBoxPadding"
-            android:id="@+id/seekBar"
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:id="@+id/bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:foregroundTint="@color/mainColor"
-            android:thumb="@drawable/icon_circle"
-            android:theme="@style/SeekBarColor"
-            >
+            android:orientation="vertical">
 
-        </SeekBar>
+            <SeekBar
+                android:paddingHorizontal="@dimen/playBoxPadding"
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foregroundTint="@color/mainColor"
+                android:thumb="@drawable/icon_circle"
+                android:theme="@style/SeekBarColor">
 
-        <include
-            android:id="@+id/play_box"
-            layout="@layout/layout_play_box"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-           ></include>
-    </LinearLayout>
+            </SeekBar>
 
-</RelativeLayout>
+            <include
+                android:id="@+id/play_box"
+                layout="@layout/layout_play_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"></include>
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>
