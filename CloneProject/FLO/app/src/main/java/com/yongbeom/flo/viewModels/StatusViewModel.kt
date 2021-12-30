@@ -11,4 +11,5 @@ class StatusViewModel:ViewModel() {
     public val isMain:LiveData<Boolean> = _isMain
 
 
+
 }

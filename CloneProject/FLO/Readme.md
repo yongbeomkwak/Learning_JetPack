@@ -6,3 +6,7 @@
 -   main_activity.xml
     -   FragmentContainerView의 name 속성은 
         -   "androidx.navigation.fragment.NavHostFragment" 으로 한다
+- MainActivity.kt
+  - MediaPlayer   
+    - [볼륨조절](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=ksseo63&logNo=120133161294)
+  - SeekBar 컨틀로
