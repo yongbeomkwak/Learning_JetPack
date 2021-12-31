@@ -7,5 +7,6 @@
     <dimen name="Album">15sp</dimen>
     <dimen name="Img">280dp</dimen>
     <dimen name="Lyrics">10dp</dimen>
+    <dimen name="Clear">50dp</dimen>
 
 </resources>

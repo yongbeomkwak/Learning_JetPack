@@ -36,8 +36,8 @@ import java.lang.Exception
 class MainActivity : AppCompatActivity() {
     private var mBinding:ActivityMainBinding? =null
     private val binding get() = mBinding
-    private lateinit var navController: NavController
     private var mediaPlayer:MediaPlayer? =null
+    public lateinit var navController: NavController
     public val statusViewModel:StatusViewModel by viewModels() //Fragment에서 접근할 수 있도록 public
     public lateinit var lyricsInfo:LyricsViewModel //Fragment에서 접근할 수 있도록 public
 

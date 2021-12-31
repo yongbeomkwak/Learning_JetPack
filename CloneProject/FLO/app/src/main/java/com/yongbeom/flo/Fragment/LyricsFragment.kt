@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.yongbeom.flo.Activity.MainActivity
+import com.yongbeom.flo.R
 import com.yongbeom.flo.databinding.FragmentLyricsBinding
 import com.yongbeom.flo.databinding.FragmentMainBinding
 
 class LyricsFragment:Fragment() {
     private var mBinding: FragmentLyricsBinding?=null
     private val binding get() = mBinding
+    private lateinit var act:MainActivity
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,6 +26,13 @@ class LyricsFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        act=activity as MainActivity
+
+        binding!!.imgExit.setOnClickListener {
+            act.statusViewModel._isMain.value=true
+            act.navController.navigate(R.id.action_lyricsFragment_to_mainFragment)
+        }
+
     }
 
 }

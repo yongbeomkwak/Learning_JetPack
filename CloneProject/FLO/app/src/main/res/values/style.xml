@@ -3,4 +3,12 @@
     <style name="SeekBarColor" parent="Widget.AppCompat.SeekBar">
         <item name="colorAccent">#4641BA</item>
     </style>
+
+    <style name="sw_mainColor">
+        <item name="colorControlActivated">@color/seek</item>
+    </style>
+ <!--
+    SeekBar 테모아 Switch 테마
+ -->
+
 </resources>

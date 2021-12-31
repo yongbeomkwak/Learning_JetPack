@@ -10,5 +10,6 @@
     <color name="gray">#C1BEC2</color>
     <color name="white">#FFFFFFFF</color>
     <color name="prevlyrics">#3B3B3B</color>
+    <color name="seek">#81C3FF</color>
 
 </resources>

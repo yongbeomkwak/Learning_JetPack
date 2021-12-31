@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black">
+    <RelativeLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:orientation="horizontal"
+        >
+
+
+        <ImageButton
+            android:id="@+id/imgExit"
+            android:padding="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:src="@drawable/icon_clear"
+            android:layout_centerVertical="true"
+            >
+        </ImageButton>
+
+        <Switch
+            android:textColor="@color/seek"
+            android:id="@+id/switchSeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seek"
+            android:theme="@style/sw_mainColor"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+
+            />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
