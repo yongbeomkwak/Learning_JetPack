@@ -13,9 +13,10 @@
         <entry key="app/src/main/res/drawable/icon_playlist.xml" value="0.1787037037037037" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.10572916666666667" />
-        <entry key="app/src/main/res/layout/fragment_lyrics.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_lyrics.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_lyrics.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_main_lyrics.xml" value="0.11666666666666667" />
         <entry key="app/src/main/res/layout/layout_play_box.xml" value="0.25" />
       </map>
     </option>

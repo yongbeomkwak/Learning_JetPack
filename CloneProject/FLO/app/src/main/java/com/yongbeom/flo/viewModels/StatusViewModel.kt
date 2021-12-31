@@ -11,6 +11,8 @@ class StatusViewModel:ViewModel() {
     public val isMain:LiveData<Boolean> = _isMain
     public val _pos:MutableLiveData<Int> = MutableLiveData(0)
     public val pos:LiveData<Int> = _pos
+    public val _isSeek:MutableLiveData<Boolean> = MutableLiveData(false)
+    public val isSeek:LiveData<Boolean> = _isSeek
 
 
 
