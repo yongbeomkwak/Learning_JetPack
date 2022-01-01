@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:layout_marginVertical="@dimen/Lyrics"
+
         android:gravity="center"
         android:id="@+id/tv_prevlyrics"
         android:layout_width="match_parent"

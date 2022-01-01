@@ -60,6 +60,7 @@
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <include
+        android:paddingBottom="20dp"
         android:id="@+id/lyricsBox"
         layout="@layout/layout_lyrics"
         android:layout_width="match_parent"
