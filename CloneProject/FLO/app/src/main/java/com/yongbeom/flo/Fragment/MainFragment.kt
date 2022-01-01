@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.yongbeom.flo.Activity.MainActivity
+import com.yongbeom.flo.R
 import com.yongbeom.flo.databinding.ActivitySplashBinding
 import com.yongbeom.flo.databinding.FragmentMainBinding
 import com.yongbeom.flo.util.FloApplication
@@ -73,6 +74,10 @@ class MainFragment:Fragment() {
             }
         })
 
-        Log.e("OnViewCreated","Lebal")
+        binding!!.lyricsBox.root.setOnClickListener { // 가사 창 클릭 시 전체 창으로 이동
+            act.statusViewModel._isMain.value=false
+            act.navController.navigate(R.id.action_mainFragment_to_lyricsFragment)
+        }
+
     }
 }

@@ -28,7 +28,7 @@ class FloApplication:Application() {
             override fun onResponse(call: Call<Respon>, response: Response<Respon>) {
                 if(response.isSuccessful)
                 {
-                    Log.e("Response", response.body().toString())
+
                     _data= response.body()!!
                 }
             }

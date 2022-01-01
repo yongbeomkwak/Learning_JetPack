@@ -7,7 +7,7 @@
 
     <TextView
         android:gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/gray"
         android:id="@+id/tvLyrics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

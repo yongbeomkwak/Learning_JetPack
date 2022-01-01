@@ -23,15 +23,13 @@ import com.yongbeom.flo.util.RetrofitService
 import com.yongbeom.flo.util.RetrofitSet
 import com.yongbeom.flo.viewModels.LyricsViewModel
 import com.yongbeom.flo.viewModels.StatusViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import java.lang.Exception
+import java.lang.Runnable
 
 class MainActivity : AppCompatActivity() {
     private var mBinding:ActivityMainBinding? =null
@@ -39,7 +37,8 @@ class MainActivity : AppCompatActivity() {
     private var mediaPlayer:MediaPlayer? =null
     public lateinit var navController: NavController
     public val statusViewModel:StatusViewModel by viewModels() //Fragment에서 접근할 수 있도록 public
-    public lateinit var lyricsInfo:LyricsViewModel //Fragment에서 접근할 수 있도록 public
+    public val lyricsInfo:LyricsViewModel=LyricsViewModel()
+    public var lyricsScollYList:MutableList<Int> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,9 +58,7 @@ class MainActivity : AppCompatActivity() {
                 binding!!.seekBar.max=FloApplication._data.duration// seekBar max값 설정
             }
         })
-        CoroutineScope(Dispatchers.IO).launch { //코루틴을 사용해 복잡한 초기화 작업을 거침
-            lyricsInfo=LyricsViewModel()
-        }
+
 
 
         /**
@@ -133,7 +130,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding!!.playBox.imgPlayList.setOnClickListener{
-            //가사창으로 Fragment이동, MainFragment인지 그 값 역시 변
+            //가사창으로 Fragment이동, MainFragment인지 그 값 역시 변함
             statusViewModel._isMain.value=!statusViewModel._isMain.value!!
             navController.navigate(R.id.action_mainFragment_to_lyricsFragment)
         }
@@ -156,6 +153,8 @@ class MainActivity : AppCompatActivity() {
                     mediaPlayer!!.seekTo(progressToMediaSeek(progress)) //유저가 움직인 만큼 mediaPlayer도 노래 재생 위치를 변경
                     //이때 mediaPlayer와 Progress값과 차이가 있으니 해당 함수를 통해 맞춰줌
                 }
+
+
 
             }
 
@@ -206,6 +205,12 @@ class MainActivity : AppCompatActivity() {
             mediaPlayer = null;
         }
         return super.isDestroyed()
+    }
+
+    fun moveSeekBarFromLyricsFragment(index:Int) //LyricsFragment에서 가사 클릭시 해당 노래위치와 SeekBar progress를 변경
+    {
+        //mediaPlayer를 옮기면 위에 Thread 부분에서 다시 progress를 초기화 시킴
+        mediaPlayer!!.seekTo(progressToMediaSeek(lyricsInfo._time[index])) // TextView에 해당 되는 id에 의한 index 이용해 time라인 이동
     }
 
 

@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:switchPadding="10dp"
+            android:switchPadding="20dp"
             android:text="Seek"
             android:textColor="@color/seek"
             android:theme="@style/sw_mainColor"
@@ -43,19 +43,26 @@
             />
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:clipToPadding="false"
-
-        android:id="@+id/recLyrics"
-        app:layout_constraintVertical_weight="9"
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingBottom="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/relTop"
-        android:background="@color/black"
-        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         >
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <TableLayout
+            android:id="@+id/table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+        </TableLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

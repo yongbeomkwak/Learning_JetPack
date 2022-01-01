@@ -21,6 +21,7 @@
     -   [Switch](https://lktprogrammer.tistory.com/181)
     -   Fragment는 context=requireContext()
     -   ReyclerView 아이템간 간격 RecyclerDecoration 이용
+    -   테이블 레이웃 + 스크롤 뷰를 이용하여
 
 -   LyricsAdapter.kt
     -   RecylcerView 관련 구성
