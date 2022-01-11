@@ -2,6 +2,7 @@ package com.programmers.kmooc.activities.list
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -36,9 +37,42 @@ class KmoocListActivity : AppCompatActivity() {
 
         viewModel.list()
         binding.lectureList.adapter = adapter
+
         viewModel.lectureList.observe(this, Observer {lectureList ->
-            
+            //RefreshListener 다음 동작됨 Listener안에 .list가 해당 liveData를 변경시킴
+            Log.e("ListObserve","List Changed")
+            adapter.updateLectures(lectureList.lectures)
+            binding.pullToRefresh.isRefreshing=false //Refresh 끄기
         })
+
+
+        binding.lectureList.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val layoutManager=binding.lectureList.layoutManager
+
+                if (viewModel.progressVisible.value!=true)
+                {
+                    //보이는 마지막 아이
+                    val lastVisibleItem=(layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+
+                    if(layoutManager.itemCount <=lastVisibleItem+5) //아이템 개수가 현재 기준 5개 보다 더 남았다면
+                    {
+                        viewModel.next() //다음 아이템 불러오기
+                    }
+                }
+            }
+        })
+
+
+        binding.pullToRefresh.setOnRefreshListener{
+            Log.e("Refresh","Re")
+            viewModel.list() //변
+        }
+
+
 
 
     }
