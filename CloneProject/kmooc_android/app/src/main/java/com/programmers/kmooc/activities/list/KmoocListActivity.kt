@@ -28,6 +28,7 @@ class KmoocListActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, KmoocListViewModelFactory(kmoocRepository)).get(
             KmoocListViewModel::class.java
         )
+        //view Model 생성
 
         binding = ActivityKmookListBinding.inflate(layoutInflater)
         setContentView(binding.root)

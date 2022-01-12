@@ -25,6 +25,14 @@ object ImageLoader {
         }
 
         GlobalScope.launch(Dispatchers.IO) { //네트워크 작업이므로
+
+            try {
+                val bitmap:Bitmap =BitmapFactory.decodeStream(URL(url).openStream())
+            } catch (e:Exception)
+            {
+
+            }
+
             withContext(Dispatchers.Main){
 
             }

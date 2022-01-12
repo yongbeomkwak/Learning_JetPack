@@ -132,3 +132,5 @@ version은 앱을 업데이트하다가 entity의 구조를 변경해야 하는 
 
 ### [MVVM 패턴](https://aonee.tistory.com/48)
 ### [Repository Pattern](https://developer88.tistory.com/210)
+
+### [ViewModelFactory](https://readystory.tistory.com/176)

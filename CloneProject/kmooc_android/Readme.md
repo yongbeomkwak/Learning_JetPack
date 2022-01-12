@@ -10,6 +10,7 @@
    -  has(name):해당 name에 대항 속성 존재하냐?
    -  DateUtil.parseDate(getString("start")):해당 문자열을 Date타입으로 
 
+   -    Lambda 함수를 이용한 익명함수 
 
 ##  2-1  KmoocListActivity
 -   무한스크롤 구현 OnScrolled 과 layoutManager이용 
