@@ -46,6 +46,11 @@ class KmoocListActivity : AppCompatActivity() {
             binding.pullToRefresh.isRefreshing=false //Refresh 끄기
         })
 
+        viewModel.progressVisible.observe(this, Observer { visible->
+            binding.progressBar.visibility=visible.toVisibility()
+        })
+
+
 
         binding.lectureList.addOnScrollListener(object :RecyclerView.OnScrollListener(){
 

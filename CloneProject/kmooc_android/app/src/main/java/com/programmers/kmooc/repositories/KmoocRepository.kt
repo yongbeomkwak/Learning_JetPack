@@ -1,5 +1,6 @@
 package com.programmers.kmooc.repositories
 
+import android.util.Log
 import com.programmers.kmooc.models.Lecture
 import com.programmers.kmooc.models.LectureList
 import com.programmers.kmooc.network.HttpClient
@@ -73,7 +74,9 @@ class KmoocRepository {
     }
 
     private fun parseLecture(jsonObject: JSONObject): Lecture {
+
         return jsonObject.run {
+            Log.e("StartDate",getString("start"))
             Lecture(
                 getString("id"),
                 getString("number"),

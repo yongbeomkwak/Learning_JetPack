@@ -18,4 +18,9 @@ object DateUtil {
         val format = SimpleDateFormat("yyyy/MM/dd")
         return format.format(date)
     }
+
+    fun dueString(start:Date,end:Date):String
+    {
+        return "${formatDate(start)} ~ ${formatDate(end)}"
+    }
 }

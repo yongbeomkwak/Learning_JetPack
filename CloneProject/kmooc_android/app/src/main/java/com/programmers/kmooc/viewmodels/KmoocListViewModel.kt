@@ -31,7 +31,7 @@ class KmoocListViewModel(private val repository: KmoocRepository) : ViewModel() 
                 }
             lectureList.lectures=mergedLectures
             this.lectureList.postValue(lectureList) //라이브데이터 변경
-            progressVisible.postValue(false) //로딩중 끄기
+           progressVisible.postValue(false) //로딩중 끄기
         }
     }
 }
@@ -39,8 +39,8 @@ class KmoocListViewModel(private val repository: KmoocRepository) : ViewModel() 
 class KmoocListViewModelFactory(private val repository: KmoocRepository) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(KmoocListViewModel::class.java)) {
-            return KmoocListViewModel(repository) as T
+        if (modelClass.isAssignableFrom(KmoocListViewModel::class.java)) { // .isAssignableFrom
+            return KmoocListViewModel(repository) as T //해당 타입의 viewModel 리턴
         }
         throw IllegalAccessException("Unkown Viewmodel Class")
     }
