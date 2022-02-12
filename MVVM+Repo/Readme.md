@@ -2,6 +2,7 @@
 
 ## Volatile
 - volatile 키워드의 경우 접근가능한 변수의 값을 cache를 통해 사용하지 않고 thread가 직접 main memory에 접근하여 읽고 씁니다.
+- 한 스레드에서 volatile 변수 값을 읽고 쓰고, 다른 스레드에서는 오직 volatile 변수 값을 읽기만 하는 경우, 읽는 스레드에서는 volatile 변수가 가장 최근에 쓰여졌다는 것을 보장한다
 
 
 ## [ListAdapter](https://youngest-programming.tistory.com/474)
